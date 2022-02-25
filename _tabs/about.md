@@ -5,4 +5,16 @@ order: 4
 ---
 
 
-> **Note**: Add Markdown syntax content to file `_tabs/about.md` and it will show up on this page.
+## 教育经历
+---
+- 2018.8-2022.6 华中农业大学，地理信息科学，本科
+
+
+## 奖励
+---
+#### 软著
+- 水土流失信息综合统计软件V1.0 （登记号2021SR2076514）
+
+
+#### 比赛
+- 第四届全国航天宏图开发大赛优胜奖
