@@ -18,12 +18,12 @@ timezone: Asia/Shanghai
 # jekyll-seo-tag settings › https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/usage.md
 # ↓ --------------------------
 
-title: RainLv                          # the main title
+title: RainnaLv's Blog                          # the main title
 
 tagline: An Ordinary Code Farmer   # it will display as the sub-title
 
 description: >-                        # used by seo meta and the atom feed
-  RainLv's Blog
+  RainnaLv's Blog
 
 # fill in the protocol & hostname for your site, e.g., 'https://username.github.io'
 url: 'https://rainlv.github.io'
@@ -37,7 +37,7 @@ twitter:
 social:
   # Change to your full name.
   # It will be displayed as the default author of the posts and the copyright owner in the Footer
-  name: Rainlv
+  name: RainnaLv
   email: Xuanh.W@outlook.com            # change to your email address
   links:
     # The first element serves as the copyright owner's link
@@ -80,7 +80,7 @@ theme_mode: dark # [light|dark]
 img_cdn:
 
 # the avatar on sidebar, support local or CORS resources
-avatar: 'asserts/avatar.jpeg'
+avatar: 'assets/img/avatar.jpeg'
 
 # boolean type, the global switch for ToC in posts.
 toc: true
