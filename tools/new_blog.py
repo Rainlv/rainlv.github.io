@@ -27,7 +27,7 @@ def new_md(title: str, save_path: str):
       else:
         print('请输入" y 或 s "!')
 
-  with open(save_file_name, 'w') as fw:
+  with open(save_file_name, 'w', encoding='utf8') as fw:
     fw.write(f"""---
 title: {title}
 date: {full_time_str}
