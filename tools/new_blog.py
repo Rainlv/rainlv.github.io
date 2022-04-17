@@ -43,4 +43,3 @@ def main():
   new_md(args.title, args.save_path)
 
 main()
-  
