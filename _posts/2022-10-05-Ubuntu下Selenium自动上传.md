@@ -2,7 +2,7 @@
 title: Ubuntu下Selenium自动上传
 date: 2022-10-05 22:19:09 +0800
 categories: [踩坑]
-tags: []
+tags: [python, linux, Selenium, Ubuntu]
 ---
 
 ## 问题描述

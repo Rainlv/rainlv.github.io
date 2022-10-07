@@ -2,7 +2,7 @@
 title: Ubuntu配置时间服务器(TCP版)
 date: 2022-10-05 22:18:54 +0800
 categories: [配置]
-tags: [环境部署]
+tags: [环境部署, Ubuntu, linux]
 ---
 
 ## 问题提出
