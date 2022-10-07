@@ -5,6 +5,7 @@ import argparse
 import os
 from datetime import datetime
 from pathlib import Path
+import time
 
 
 def arg_parser():
@@ -15,12 +16,16 @@ def arg_parser():
     return parser
 
 
-def time_format(title: str):
+def time_format(title: str, create_time=None):
     assert not title.isdigit(), "标题不可为数字"
     FULL_TIME_FORMAT = '%Y-%m-%d %H:%M:%S +0800'
     title_time_fmt = "%Y-%m-%d"
-    time_ymd_str = datetime.now().strftime(title_time_fmt)
-    full_time_str = datetime.now().strftime(FULL_TIME_FORMAT)
+    if not create_time:
+        time_ymd_str = datetime.now().strftime(title_time_fmt)
+        full_time_str = datetime.now().strftime(FULL_TIME_FORMAT)
+    else:
+        time_ymd_str = time.strftime(title_time_fmt, create_time)
+        full_time_str = time.strftime(FULL_TIME_FORMAT, create_time)
     return f"""---
 title: {title}
 date: {full_time_str}
@@ -28,7 +33,11 @@ date: {full_time_str}
 
 
 def new_md(title: str, save_path: str, raw_file: Path = None):
-    title_str, time_ymd_str = time_format(title)
+    if raw_file:
+        time_create = time.localtime(raw_file.stat().st_mtime)
+        title_str, time_ymd_str = time_format(title, time_create)
+    else:
+        title_str, time_ymd_str = time_format(title)
     save_file_name = os.path.join(save_path, time_ymd_str + f"-{title}.md")
     if os.path.exists(save_file_name):
         while 1:
