@@ -1,11 +1,54 @@
+#Fluid配置
+banner_img:
+
+navbar:
+  blog_title: "RainnaLv's Blog"
+
+web_analytics:  # 网页访问统计
+  enable: false # 默认为false，启用网页统计改为true即可
+  baidu:  # 百度统计的Key，参见 https://tongji.baidu.com/sc-web/10000033910/home/site/getjs?siteId=13751376 代码获取中 hm.js? 后边的字符串
+  google:  # Google统计的Tracking ID，参见 https://analytics.google.com/analytics/web/
+  tencent:  # 腾讯统计的H5 App id，参见 https://mta.qq.com/h5/manage/ctr_app_manage (开启高级功能才有cid)
+    sid:
+    cid:
+  woyaola:  # 51.la站点统计ID，参见 https://www.51.la/user/site/index
+  cnzz:  # 友盟/cnzz站点统计web_id，参见 https://web.umeng.com/main.php?c=site&a=show
+  leancloud:  # LeanCloud 计数统计，可用于 PV UV 展示，如果 web_analytics.enable 没有开启，PV UV 展示只会查询，不会增加
+    app_id:
+    app_key:
+    server_url:  # REST API 服务器地址，国际版不填
+
+footer:
+  statistics:
+    enable: true
+    source: "busuanzi"  # 可选 leancloud | busuanzi  根据自己需求选择
+    pv_format: "总访问量 {} 次"  # 显示的文本，{}是数字的占位符（必须包含)，下同
+    uv_format: "总访客数 {} 人"
+
+
+index:
+  slogan:
+    enable: true
+    text: Nobody
+
+about:
+  avatar: /img/avatar.jpeg
+  name: "Rainnalv"
+  intro: "Nobody"
+
+  icons:
+  - { class: 'iconfont icon-github-fill', link: 'https://github.com/Rainlv', tip: 'GitHub' }
+  # - { class: 'iconfont icon-douban-fill', link: 'https://douban.com', tip: '豆瓣' }
+  # - { class: 'iconfont icon-wechat-fill', qrcode: '/img/favicon.png' }
+
 # Hexo Configuration
 ## Docs: https://hexo.io/docs/configuration.html
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Hexo
+title: RainnaLv'Blog
 subtitle: ''
-description: ''
+description: 'Nobody'
 keywords:
 author: rainnalv
 language: zh-CN
@@ -13,7 +56,7 @@ timezone: 'Asia/Shanghai'
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
-url: http://example.com
+url: http://blog.rainna.xyz/
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 pretty_urls:
@@ -97,9 +140,19 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: butterfly
+theme: fluid
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
-  type: ''
+  type: git
+  repo: https://github.com/Rainlv/rainlv.github.io
+  # example, https://github.com/hexojs/hexojs.github.io
+  branch: gh-pages
+
+
+favicon: /img/favicons/favicon.ico
+  # small: /img/favicons/favicon-16x16.png
+  # medium: /img/favicons/favicon.ico
+  # app_touch_icon: /img/favicons/apple-touch-icon.png
+  # safari_pined_tab: /img/favicons/safari-pinned-tab.svg
