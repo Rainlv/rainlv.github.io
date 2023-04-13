@@ -1,7 +1,8 @@
 ---
 title: Geoserver安装配置GDAL扩展
 date: 2022-06-29 09:12:46 +0800
-
+categories: [踩坑]
+tags: [环境部署, geoserver]
 ---
 
 ## 问题描述

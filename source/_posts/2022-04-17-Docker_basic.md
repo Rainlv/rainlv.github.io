@@ -1,7 +1,7 @@
 ---
 title: Docker基础
 date: 2022-04-17 23:17:47 +0800
-categories: [命令]
+categories: [工具]
 tags: [docker]
 ---
 
