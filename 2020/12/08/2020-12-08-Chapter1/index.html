@@ -1,0 +1,734 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/favicons/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="rainnalv">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="collections.deque 使用deque(maxlen&#x3D;N)构造函数会新建一个固定大小的队列。当新的元素加入并且这个队列已满的时候，最老的元素会自动被移除掉。 123456789101112&gt;&gt;&gt; q &#x3D; deque(maxlen&#x3D;3)&gt;&gt;&gt; q.append(1)&gt;&gt;&gt; q.append(2)&gt;&gt;&gt; q.appen">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【CookBook】 Chapter1">
+<meta property="og:url" content="http://blog.rainna.xyz/2020/12/08/2020-12-08-Chapter1/index.html">
+<meta property="og:site_name" content="RainnaLv&#39;Blog">
+<meta property="og:description" content="collections.deque 使用deque(maxlen&#x3D;N)构造函数会新建一个固定大小的队列。当新的元素加入并且这个队列已满的时候，最老的元素会自动被移除掉。 123456789101112&gt;&gt;&gt; q &#x3D; deque(maxlen&#x3D;3)&gt;&gt;&gt; q.append(1)&gt;&gt;&gt; q.append(2)&gt;&gt;&gt; q.appen">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-12-08T01:20:31.000Z">
+<meta property="article:modified_time" content="2023-04-13T16:39:56.644Z">
+<meta property="article:author" content="rainnalv">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>【CookBook】 Chapter1 - RainnaLv&#39;Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blog.rainna.xyz","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>RainnaLv&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="【CookBook】 Chapter1"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2020-12-08 09:20" pubdate>
+          2020年12月8日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          7.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          64 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">【CookBook】 Chapter1</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="collections-deque">collections.deque</h2>
+<p>使用deque(maxlen=N)构造函数会新建一个固定大小的队列。当新的元素加入并且这个队列已满的时候，最老的元素会自动被移除掉。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>q = deque(maxlen=<span class="hljs-number">3</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>q.append(<span class="hljs-number">1</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>q.append(<span class="hljs-number">2</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>q.append(<span class="hljs-number">3</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>q<br>deque([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>], maxlen=<span class="hljs-number">3</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>q.append(<span class="hljs-number">4</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>q<br>deque([<span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>], maxlen=<span class="hljs-number">3</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>q.append(<span class="hljs-number">5</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>q<br>deque([<span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>], maxlen=<span class="hljs-number">3</span>)<br></code></pre></td></tr></table></figure>
+<p>如果你不设置最大队列大小，那么就会得到一个无限大小队列，你可以在队列的两端执行添加和弹出元素的操作。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>q = deque()<br><span class="hljs-meta">&gt;&gt;&gt; </span>q.append(<span class="hljs-number">1</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>q.append(<span class="hljs-number">2</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>q.append(<span class="hljs-number">3</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>q<br>deque([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>])<br><span class="hljs-meta">&gt;&gt;&gt; </span>q.appendleft(<span class="hljs-number">4</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>q<br>deque([<span class="hljs-number">4</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>])<br><span class="hljs-meta">&gt;&gt;&gt; </span>q.pop()<br><span class="hljs-number">3</span><br><span class="hljs-meta">&gt;&gt;&gt; </span>q<br>deque([<span class="hljs-number">4</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>])<br><span class="hljs-meta">&gt;&gt;&gt; </span>q.popleft()<br><span class="hljs-number">4</span><br></code></pre></td></tr></table></figure>
+<h2 id="heapq">heapq</h2>
+<h2 id="字典操作">字典操作</h2>
+<h6 id="1-寻找相同点-比如相同的键、相同的值等等">1. 寻找相同点(比如相同的键、相同的值等等)</h6>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">a = &#123;<span class="hljs-string">&#x27;x&#x27;</span> : <span class="hljs-number">1</span>,<span class="hljs-string">&#x27;y&#x27;</span> : <span class="hljs-number">2</span>,<span class="hljs-string">&#x27;z&#x27;</span> : <span class="hljs-number">3</span>&#125;<br>b = &#123;<span class="hljs-string">&#x27;w&#x27;</span> : <span class="hljs-number">10</span>,<span class="hljs-string">&#x27;x&#x27;</span> : <span class="hljs-number">11</span>,<span class="hljs-string">&#x27;y&#x27;</span> : <span class="hljs-number">2</span>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># Find keys in common</span><br>a.keys() &amp; b.keys()     <span class="hljs-comment"># &#123; &#x27;x&#x27;, &#x27;y&#x27; &#125;</span><br><span class="hljs-comment"># Find keys in a that are not in b</span><br>a.keys() - b.keys()     <span class="hljs-comment"># &#123; &#x27;z&#x27; &#125;</span><br><span class="hljs-comment"># Find (key,value) pairs in common</span><br>a.items() &amp; b.items()   <span class="hljs-comment"># &#123; (&#x27;y&#x27;, 2) &#125;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># Make a new dictionary with certain keys removed</span><br>c = &#123;key:a[key] <span class="hljs-keyword">for</span> key <span class="hljs-keyword">in</span> a.keys() - &#123;<span class="hljs-string">&#x27;z&#x27;</span>, <span class="hljs-string">&#x27;w&#x27;</span>&#125;&#125;<br><span class="hljs-comment"># c is &#123;&#x27;x&#x27;: 1, &#x27;y&#x27;: 2&#125;</span><br></code></pre></td></tr></table></figure>
+<h6 id="2-字典排序">2. 字典排序</h6>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python">prices = &#123;<br>    <span class="hljs-string">&#x27;ACME&#x27;</span>: <span class="hljs-number">45.23</span>,<br>    <span class="hljs-string">&#x27;AAPL&#x27;</span>: <span class="hljs-number">612.78</span>,<br>    <span class="hljs-string">&#x27;IBM&#x27;</span>: <span class="hljs-number">205.55</span>,<br>    <span class="hljs-string">&#x27;HPQ&#x27;</span>: <span class="hljs-number">37.20</span>,<br>    <span class="hljs-string">&#x27;FB&#x27;</span>: <span class="hljs-number">10.75</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">为了对字典值执行计算操作，通常需要使用zip()函数先将键和值反转过来。
+</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python">min_price = <span class="hljs-built_in">min</span>(<span class="hljs-built_in">zip</span>(prices.values(), prices.keys()))<br><span class="hljs-comment"># min_price is (10.75, &#x27;FB&#x27;)</span><br>max_price = <span class="hljs-built_in">max</span>(<span class="hljs-built_in">zip</span>(prices.values(), prices.keys()))<br><span class="hljs-comment"># max_price is (612.78, &#x27;AAPL&#x27;)</span><br>prices_sorted = <span class="hljs-built_in">sorted</span>(<span class="hljs-built_in">zip</span>(prices.values(), prices.keys()))<br><span class="hljs-comment"># prices_sorted is [(10.75, &#x27;FB&#x27;), (37.2, &#x27;HPQ&#x27;),</span><br><span class="hljs-comment">#                   (45.23, &#x27;ACME&#x27;), (205.55, &#x27;IBM&#x27;),</span><br><span class="hljs-comment">#                   (612.78, &#x27;AAPL&#x27;)]</span><br></code></pre></td></tr></table></figure>
+<p><em>需要注意的是zip()函数创建的是一个只能访问一次的迭代器。</em></p>
+<h6 id="3-OrderedDict">3. OrderedDict</h6>
+<br>
+<h6 id="4-合并-ChainMap">4. 合并-ChainMap</h6>
+<pre><code class="hljs">现在有多个字典或者映射，你想将它们从逻辑上合并为一个单一的映射后执行某些操作，比如查找值或者检查某些键是否存在
+</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python">a = &#123;<span class="hljs-string">&#x27;x&#x27;</span>: <span class="hljs-number">1</span>, <span class="hljs-string">&#x27;z&#x27;</span>: <span class="hljs-number">3</span> &#125;<br>b = &#123;<span class="hljs-string">&#x27;y&#x27;</span>: <span class="hljs-number">2</span>, <span class="hljs-string">&#x27;z&#x27;</span>: <span class="hljs-number">4</span> &#125;<br><br><span class="hljs-keyword">from</span> collections <span class="hljs-keyword">import</span> ChainMap<br>c = ChainMap(a,b)<br><span class="hljs-built_in">print</span>(c[<span class="hljs-string">&#x27;x&#x27;</span>]) <span class="hljs-comment"># Outputs 1 (from a)</span><br><span class="hljs-built_in">print</span>(c[<span class="hljs-string">&#x27;y&#x27;</span>]) <span class="hljs-comment"># Outputs 2 (from b)</span><br><span class="hljs-built_in">print</span>(c[<span class="hljs-string">&#x27;z&#x27;</span>]) <span class="hljs-comment"># Outputs 3 (from a)</span><br></code></pre></td></tr></table></figure>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p><strong>对于字典的更新或删除操作总是影响的是列表中第一个字典</strong></p>
+</li>
+</ul>
+<h2 id="序列-列表-操作">序列(列表)操作</h2>
+<h6 id="1-切片–slice">1. 切片–slice</h6>
+<pre><code class="hljs">内置的slice()函数创建了一个切片对象,供切片命名
+</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">record = <span class="hljs-string">&#x27;....................100 .......513.25 ..........&#x27;</span><br>SHARES = <span class="hljs-built_in">slice</span>(<span class="hljs-number">20</span>, <span class="hljs-number">23</span>)<br>PRICE = <span class="hljs-built_in">slice</span>(<span class="hljs-number">31</span>, <span class="hljs-number">37</span>)<br>cost = <span class="hljs-built_in">int</span>(record[SHARES]) * <span class="hljs-built_in">float</span>(record[PRICE])<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">部分属性及方法
+</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>a = <span class="hljs-built_in">slice</span>(<span class="hljs-number">5</span>, <span class="hljs-number">50</span>, <span class="hljs-number">2</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>a.start<br><span class="hljs-number">5</span><br><span class="hljs-meta">&gt;&gt;&gt; </span>a.stop<br><span class="hljs-number">50</span><br><span class="hljs-meta">&gt;&gt;&gt; </span>a.step<br><span class="hljs-number">2</span><br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">另外，你还能通过调用切片的indices(size)方法将它映射到一个确定大小的序列上，这个方法返回一个三元组(start,stop,step)，所有值都会被合适的缩小以满足边界限制，从而使用的时候避免出现IndexError异常。
+</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>s = <span class="hljs-string">&#x27;HelloWorld&#x27;</span><br><span class="hljs-meta">&gt;&gt;&gt; </span>a.indices(<span class="hljs-built_in">len</span>(s))<br>(<span class="hljs-number">5</span>, <span class="hljs-number">10</span>, <span class="hljs-number">2</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(*a.indices(<span class="hljs-built_in">len</span>(s))):<br><span class="hljs-meta">... </span><span class="hljs-built_in">print</span>(s[i])<br>...<br>W<br>r<br>d<br></code></pre></td></tr></table></figure>
+<h6 id="2-排序–itemgetter，attrgetter">2. 排序–itemgetter，attrgetter</h6>
+<pre><code class="hljs">都可以用lambda表达式替代，但使用内置函数效率更高
+</code></pre>
+<br>
+<pre><code class="hljs">*字典列表排序*
+通过使用operator模块的itemgetter函数，可以非常容易的排序这样的数据结构
+</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python">rows = [<br>    &#123;<span class="hljs-string">&#x27;fname&#x27;</span>: <span class="hljs-string">&#x27;Brian&#x27;</span>, <span class="hljs-string">&#x27;lname&#x27;</span>: <span class="hljs-string">&#x27;Jones&#x27;</span>, <span class="hljs-string">&#x27;uid&#x27;</span>: <span class="hljs-number">1003</span>&#125;,<br>    &#123;<span class="hljs-string">&#x27;fname&#x27;</span>: <span class="hljs-string">&#x27;David&#x27;</span>, <span class="hljs-string">&#x27;lname&#x27;</span>: <span class="hljs-string">&#x27;Beazley&#x27;</span>, <span class="hljs-string">&#x27;uid&#x27;</span>: <span class="hljs-number">1002</span>&#125;,<br>    &#123;<span class="hljs-string">&#x27;fname&#x27;</span>: <span class="hljs-string">&#x27;John&#x27;</span>, <span class="hljs-string">&#x27;lname&#x27;</span>: <span class="hljs-string">&#x27;Cleese&#x27;</span>, <span class="hljs-string">&#x27;uid&#x27;</span>: <span class="hljs-number">1001</span>&#125;,<br>    &#123;<span class="hljs-string">&#x27;fname&#x27;</span>: <span class="hljs-string">&#x27;Big&#x27;</span>, <span class="hljs-string">&#x27;lname&#x27;</span>: <span class="hljs-string">&#x27;Jones&#x27;</span>, <span class="hljs-string">&#x27;uid&#x27;</span>: <span class="hljs-number">1004</span>&#125;<br>]<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">from</span> operator <span class="hljs-keyword">import</span> itemgetter<br><span class="hljs-meta">&gt;&gt;&gt; </span>rows_by_fname = <span class="hljs-built_in">sorted</span>(rows,key=itemgetter(<span class="hljs-string">&#x27;fname&#x27;</span>))<br><span class="hljs-meta">&gt;&gt;&gt; </span>rows_by_uid = <span class="hljs-built_in">sorted</span>(rows,key=itemgetter(<span class="hljs-string">&#x27;uid&#x27;</span>))<br><br><span class="hljs-meta">&gt;&gt;&gt; </span>rows_by_fname<br>[&#123;<span class="hljs-string">&#x27;fname&#x27;</span>: <span class="hljs-string">&#x27;Big&#x27;</span>, <span class="hljs-string">&#x27;uid&#x27;</span>: <span class="hljs-number">1004</span>, <span class="hljs-string">&#x27;lname&#x27;</span>: <span class="hljs-string">&#x27;Jones&#x27;</span>&#125;,<br>&#123;<span class="hljs-string">&#x27;fname&#x27;</span>: <span class="hljs-string">&#x27;Brian&#x27;</span>, <span class="hljs-string">&#x27;uid&#x27;</span>: <span class="hljs-number">1003</span>, <span class="hljs-string">&#x27;lname&#x27;</span>: <span class="hljs-string">&#x27;Jones&#x27;</span>&#125;,<br>&#123;<span class="hljs-string">&#x27;fname&#x27;</span>: <span class="hljs-string">&#x27;David&#x27;</span>, <span class="hljs-string">&#x27;uid&#x27;</span>: <span class="hljs-number">1002</span>, <span class="hljs-string">&#x27;lname&#x27;</span>: <span class="hljs-string">&#x27;Beazley&#x27;</span>&#125;,<br>&#123;<span class="hljs-string">&#x27;fname&#x27;</span>: <span class="hljs-string">&#x27;John&#x27;</span>, <span class="hljs-string">&#x27;uid&#x27;</span>: <span class="hljs-number">1001</span>, <span class="hljs-string">&#x27;lname&#x27;</span>: <span class="hljs-string">&#x27;Cleese&#x27;</span>&#125;]<br><span class="hljs-meta">&gt;&gt;&gt; </span>rows_by_uid<br>[&#123;<span class="hljs-string">&#x27;fname&#x27;</span>: <span class="hljs-string">&#x27;John&#x27;</span>, <span class="hljs-string">&#x27;uid&#x27;</span>: <span class="hljs-number">1001</span>, <span class="hljs-string">&#x27;lname&#x27;</span>: <span class="hljs-string">&#x27;Cleese&#x27;</span>&#125;,<br>&#123;<span class="hljs-string">&#x27;fname&#x27;</span>: <span class="hljs-string">&#x27;David&#x27;</span>, <span class="hljs-string">&#x27;uid&#x27;</span>: <span class="hljs-number">1002</span>, <span class="hljs-string">&#x27;lname&#x27;</span>: <span class="hljs-string">&#x27;Beazley&#x27;</span>&#125;,<br>&#123;<span class="hljs-string">&#x27;fname&#x27;</span>: <span class="hljs-string">&#x27;Brian&#x27;</span>, <span class="hljs-string">&#x27;uid&#x27;</span>: <span class="hljs-number">1003</span>, <span class="hljs-string">&#x27;lname&#x27;</span>: <span class="hljs-string">&#x27;Jones&#x27;</span>&#125;,<br>&#123;<span class="hljs-string">&#x27;fname&#x27;</span>: <span class="hljs-string">&#x27;Big&#x27;</span>, <span class="hljs-string">&#x27;uid&#x27;</span>: <span class="hljs-number">1004</span>, <span class="hljs-string">&#x27;lname&#x27;</span>: <span class="hljs-string">&#x27;Jones&#x27;</span>&#125;]<br><br><span class="hljs-comment"># itemgetter()函数也支持多个keys</span><br><span class="hljs-meta">&gt;&gt;&gt; </span>rows_by_lfname = <span class="hljs-built_in">sorted</span>(rows,  key=itemgetter(<span class="hljs-string">&#x27;lname&#x27;</span>,<span class="hljs-string">&#x27;fname&#x27;</span>))<br><span class="hljs-meta">&gt;&gt;&gt; </span>rows_by_lfname<br>[&#123;<span class="hljs-string">&#x27;fname&#x27;</span>: <span class="hljs-string">&#x27;David&#x27;</span>, <span class="hljs-string">&#x27;uid&#x27;</span>: <span class="hljs-number">1002</span>, <span class="hljs-string">&#x27;lname&#x27;</span>: <span class="hljs-string">&#x27;Beazley&#x27;</span>&#125;,<br>&#123;<span class="hljs-string">&#x27;fname&#x27;</span>: <span class="hljs-string">&#x27;John&#x27;</span>, <span class="hljs-string">&#x27;uid&#x27;</span>: <span class="hljs-number">1001</span>, <span class="hljs-string">&#x27;lname&#x27;</span>: <span class="hljs-string">&#x27;Cleese&#x27;</span>&#125;,<br>&#123;<span class="hljs-string">&#x27;fname&#x27;</span>: <span class="hljs-string">&#x27;Big&#x27;</span>, <span class="hljs-string">&#x27;uid&#x27;</span>: <span class="hljs-number">1004</span>, <span class="hljs-string">&#x27;lname&#x27;</span>: <span class="hljs-string">&#x27;Jones&#x27;</span>&#125;,<br>&#123;<span class="hljs-string">&#x27;fname&#x27;</span>: <span class="hljs-string">&#x27;Brian&#x27;</span>, <span class="hljs-string">&#x27;uid&#x27;</span>: <span class="hljs-number">1003</span>, <span class="hljs-string">&#x27;lname&#x27;</span>: <span class="hljs-string">&#x27;Jones&#x27;</span>&#125;]<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">排序类型相同的对象
+</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">User</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, user_id</span>):<br>        self.user_id = user_id<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__repr__</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;User(&#123;&#125;)&#x27;</span>.<span class="hljs-built_in">format</span>(self.user_id)<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">from</span> operator <span class="hljs-keyword">import</span> attrgetter<br><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">sorted</span>(users, key=attrgetter(<span class="hljs-string">&#x27;user_id&#x27;</span>))<br>[User(<span class="hljs-number">3</span>), User(<span class="hljs-number">23</span>), User(<span class="hljs-number">99</span>)]<br></code></pre></td></tr></table></figure>
+<h6 id="3-分组–itertools-groupby">3. 分组–itertools.groupby()</h6>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>rows = [<br>    &#123;<span class="hljs-string">&#x27;address&#x27;</span>: <span class="hljs-string">&#x27;5412 N CLARK&#x27;</span>, <span class="hljs-string">&#x27;date&#x27;</span>: <span class="hljs-string">&#x27;07/01/2012&#x27;</span>&#125;,<br>    &#123;<span class="hljs-string">&#x27;address&#x27;</span>: <span class="hljs-string">&#x27;5148 N CLARK&#x27;</span>, <span class="hljs-string">&#x27;date&#x27;</span>: <span class="hljs-string">&#x27;07/04/2012&#x27;</span>&#125;,<br>    &#123;<span class="hljs-string">&#x27;address&#x27;</span>: <span class="hljs-string">&#x27;5800 E 58TH&#x27;</span>, <span class="hljs-string">&#x27;date&#x27;</span>: <span class="hljs-string">&#x27;07/02/2012&#x27;</span>&#125;,<br>    &#123;<span class="hljs-string">&#x27;address&#x27;</span>: <span class="hljs-string">&#x27;2122 N CLARK&#x27;</span>, <span class="hljs-string">&#x27;date&#x27;</span>: <span class="hljs-string">&#x27;07/03/2012&#x27;</span>&#125;,<br>    &#123;<span class="hljs-string">&#x27;address&#x27;</span>: <span class="hljs-string">&#x27;5645 N RAVENSWOOD&#x27;</span>, <span class="hljs-string">&#x27;date&#x27;</span>: <span class="hljs-string">&#x27;07/02/2012&#x27;</span>&#125;,<br>    &#123;<span class="hljs-string">&#x27;address&#x27;</span>: <span class="hljs-string">&#x27;1060 W ADDISON&#x27;</span>, <span class="hljs-string">&#x27;date&#x27;</span>: <span class="hljs-string">&#x27;07/02/2012&#x27;</span>&#125;,<br>    &#123;<span class="hljs-string">&#x27;address&#x27;</span>: <span class="hljs-string">&#x27;4801 N BROADWAY&#x27;</span>, <span class="hljs-string">&#x27;date&#x27;</span>: <span class="hljs-string">&#x27;07/01/2012&#x27;</span>&#125;,<br>    &#123;<span class="hljs-string">&#x27;address&#x27;</span>: <span class="hljs-string">&#x27;1039 W GRANVILLE&#x27;</span>, <span class="hljs-string">&#x27;date&#x27;</span>: <span class="hljs-string">&#x27;07/04/2012&#x27;</span>&#125;,<br>]<br><br><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">for</span> date, items <span class="hljs-keyword">in</span> groupby(rows, key=itemgetter(<span class="hljs-string">&#x27;date&#x27;</span>)):<br>    <span class="hljs-built_in">print</span>(date)<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> items:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27; &#x27;</span>, i)<br><br>07/01/<span class="hljs-number">2012</span><br>  &#123;<span class="hljs-string">&#x27;date&#x27;</span>: <span class="hljs-string">&#x27;07/01/2012&#x27;</span>, <span class="hljs-string">&#x27;address&#x27;</span>: <span class="hljs-string">&#x27;5412 N CLARK&#x27;</span>&#125;<br>  &#123;<span class="hljs-string">&#x27;date&#x27;</span>: <span class="hljs-string">&#x27;07/01/2012&#x27;</span>, <span class="hljs-string">&#x27;address&#x27;</span>: <span class="hljs-string">&#x27;4801 N BROADWAY&#x27;</span>&#125;<br>07/02/<span class="hljs-number">2012</span><br>  &#123;<span class="hljs-string">&#x27;date&#x27;</span>: <span class="hljs-string">&#x27;07/02/2012&#x27;</span>, <span class="hljs-string">&#x27;address&#x27;</span>: <span class="hljs-string">&#x27;5800 E 58TH&#x27;</span>&#125;<br>  &#123;<span class="hljs-string">&#x27;date&#x27;</span>: <span class="hljs-string">&#x27;07/02/2012&#x27;</span>, <span class="hljs-string">&#x27;address&#x27;</span>: <span class="hljs-string">&#x27;5645 N RAVENSWOOD&#x27;</span>&#125;<br>  &#123;<span class="hljs-string">&#x27;date&#x27;</span>: <span class="hljs-string">&#x27;07/02/2012&#x27;</span>, <span class="hljs-string">&#x27;address&#x27;</span>: <span class="hljs-string">&#x27;1060 W ADDISON&#x27;</span>&#125;<br>07/03/<span class="hljs-number">2012</span><br>  &#123;<span class="hljs-string">&#x27;date&#x27;</span>: <span class="hljs-string">&#x27;07/03/2012&#x27;</span>, <span class="hljs-string">&#x27;address&#x27;</span>: <span class="hljs-string">&#x27;2122 N CLARK&#x27;</span>&#125;<br>07/04/<span class="hljs-number">2012</span><br>  &#123;<span class="hljs-string">&#x27;date&#x27;</span>: <span class="hljs-string">&#x27;07/04/2012&#x27;</span>, <span class="hljs-string">&#x27;address&#x27;</span>: <span class="hljs-string">&#x27;5148 N CLARK&#x27;</span>&#125;<br>  &#123;<span class="hljs-string">&#x27;date&#x27;</span>: <span class="hljs-string">&#x27;07/04/2012&#x27;</span>, <span class="hljs-string">&#x27;address&#x27;</span>: <span class="hljs-string">&#x27;1039 W GRANVILLE&#x27;</span>&#125;<br></code></pre></td></tr></table></figure>
+<h6 id="4-过滤–itertools-compress">4. 过滤–itertools.compress()</h6>
+<pre><code class="hljs">以一个 iterable 对象和一个相对应的Boolean选择器序列作为输入参数。然后输出 iterable 对象中对应选择器为True的元素
+也可以通过filter()和推导式
+</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python">addresses = [<br>    <span class="hljs-string">&#x27;5412 N CLARK&#x27;</span>,<br>    <span class="hljs-string">&#x27;5148 N CLARK&#x27;</span>,<br>    <span class="hljs-string">&#x27;5800 E 58TH&#x27;</span>,<br>    <span class="hljs-string">&#x27;2122 N CLARK&#x27;</span><br>    <span class="hljs-string">&#x27;5645 N RAVENSWOOD&#x27;</span>,<br>    <span class="hljs-string">&#x27;1060 W ADDISON&#x27;</span>,<br>    <span class="hljs-string">&#x27;4801 N BROADWAY&#x27;</span>,<br>    <span class="hljs-string">&#x27;1039 W GRANVILLE&#x27;</span>,<br>]<br>counts = [ <span class="hljs-number">0</span>, <span class="hljs-number">3</span>, <span class="hljs-number">10</span>, <span class="hljs-number">4</span>, <span class="hljs-number">1</span>, <span class="hljs-number">7</span>, <span class="hljs-number">6</span>, <span class="hljs-number">1</span>]<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">from</span> itertools <span class="hljs-keyword">import</span> compress<br><span class="hljs-meta">&gt;&gt;&gt; </span>more5 = [n &gt; <span class="hljs-number">5</span> <span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> counts]<br><span class="hljs-meta">&gt;&gt;&gt; </span>more5<br>[<span class="hljs-literal">False</span>, <span class="hljs-literal">False</span>, <span class="hljs-literal">True</span>, <span class="hljs-literal">False</span>, <span class="hljs-literal">False</span>, <span class="hljs-literal">True</span>, <span class="hljs-literal">True</span>, <span class="hljs-literal">False</span>]<br><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">list</span>(compress(addresses, more5))<br>[<span class="hljs-string">&#x27;5800 E 58TH&#x27;</span>, <span class="hljs-string">&#x27;4801 N BROADWAY&#x27;</span>, <span class="hljs-string">&#x27;1039 W GRANVILLE&#x27;</span>]<br></code></pre></td></tr></table></figure>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E8%AF%AD%E8%A8%80/" class="category-chain-item">语言</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/python/">#python</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>【CookBook】 Chapter1</div>
+      <div>http://blog.rainna.xyz/2020/12/08/2020-12-08-Chapter1/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>rainnalv</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2020年12月8日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/12/09/2020-12-09-Chapter2/" title="【CookBook】 Chapter2">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">【CookBook】 Chapter2</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/11/22/2020-11-22-05_%E5%85%B3%E6%9C%BA%E9%87%8D%E5%90%AF%E5%91%BD%E4%BB%A4/" title="【Linux命令】 05_关机重启命令">
+                        <span class="hidden-mobile">【Linux命令】 05_关机重启命令</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,979 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/favicons/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="rainnalv">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="## 渲染模板： #### 两种方式： 1.&#96;render_to_string&#96;：找到模板，然后将模板编译后渲染成python的字符串格式。最后通过HttpResponse类包装成一个对象返回。 123456from django.http import HttpResponsefrom django.template.loader import render_to_stringdef inde">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【Django】 03.Template">
+<meta property="og:url" content="http://blog.rainna.xyz/2020/11/22/2020-11-22-03.Template/index.html">
+<meta property="og:site_name" content="RainnaLv&#39;Blog">
+<meta property="og:description" content="## 渲染模板： #### 两种方式： 1.&#96;render_to_string&#96;：找到模板，然后将模板编译后渲染成python的字符串格式。最后通过HttpResponse类包装成一个对象返回。 123456from django.http import HttpResponsefrom django.template.loader import render_to_stringdef inde">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-11-22T10:05:48.000Z">
+<meta property="article:modified_time" content="2023-04-13T16:39:39.325Z">
+<meta property="article:author" content="rainnalv">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="Django">
+<meta property="article:tag" content="后端">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>【Django】 03.Template - RainnaLv&#39;Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blog.rainna.xyz","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>RainnaLv&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="【Django】 03.Template"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2020-11-22 18:05" pubdate>
+          2020年11月22日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          5.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          47 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">【Django】 03.Template</h1>
+            
+            
+              <div class="markdown-body">
+                
+                
+## 渲染模板：
+#### 两种方式：
+1.`render_to_string`：找到模板，然后将模板编译后渲染成python的字符串格式。最后通过HttpResponse类包装成一个对象返回。
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> django.http <span class="hljs-keyword">import</span> HttpResponse<br><span class="hljs-keyword">from</span> django.template.loader <span class="hljs-keyword">import</span> render_to_string<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">index</span>(<span class="hljs-params">request</span>):<br>    html = render_to_string(<span class="hljs-string">&#x27;index.html&#x27;</span>)<br>    <span class="hljs-keyword">return</span> HttpResponse(html)<br></code></pre></td></tr></table></figure>
+
+2.`render`：直接将模板渲染成字符串并包装成HttpResponse对象。
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> django.shortcuts <span class="hljs-keyword">import</span> render<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">index</span>(<span class="hljs-params">request</span>):<br>    <span class="hljs-keyword">return</span> render(request, <span class="hljs-string">&#x27;index.html&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+## 模板路径配置：
+1.模板文件应放在`template`文件夹中
+
+2.调用模板文件，不用写文件夹路径，直接写名字就行，会默认从template文件夹调用
+
+3.这部分设置在settings.py文件`TEMPLATE属性`中，可以更改其中的`DIRS`属性来更改默认查找位置
+
+4.settings.py关于templates配置的属性介绍：
+- `DIRS`：这是一个列表，在这个列表中可以存放所有的模板路径，在使用render方法渲染函数时，会在这个列表中优先查找路径
+- `APP_DIRS`：默认为`True`，设置为True时，会在`INSTALLED_APPS`的安装了的app下的templates文件夹中查找模板
+- 查找顺序：
+    - 先在DIRS列表下查找模板，如果有，就返回
+    - 如果DIRS列表中路径找不到，会检查当前视图函数所在的app是否安装，若安装，在当前这个app下的templates文件夹中查找模板
+    - 若当前app下templates文件夹下没找到模板，则在其他已安装的app的templates文件夹中查找
+    - 若还没找到，跑出TemplateDoesNotExist异常
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs python">INSTALLED_APPS = [<br>    <span class="hljs-string">&#x27;django.contrib.admin&#x27;</span>,<br>    <span class="hljs-string">&#x27;django.contrib.auth&#x27;</span>,<br>    <span class="hljs-string">&#x27;django.contrib.contenttypes&#x27;</span>,<br>    <span class="hljs-string">&#x27;django.contrib.sessions&#x27;</span>,<br>    <span class="hljs-string">&#x27;django.contrib.messages&#x27;</span>,<br>    <span class="hljs-string">&#x27;django.contrib.staticfiles&#x27;</span>,<br>    <span class="hljs-comment"># 要安装直接写进去</span><br>    <span class="hljs-string">&#x27;front&#x27;</span><br>]<br><br>TEMPLATES = [<br>    &#123;<br>        <span class="hljs-string">&#x27;BACKEND&#x27;</span>: <span class="hljs-string">&#x27;django.template.backends.django.DjangoTemplates&#x27;</span>,<br>        <span class="hljs-string">&#x27;DIRS&#x27;</span>: [os.path.join(BASE_DIR, <span class="hljs-string">&#x27;templates&#x27;</span>)]<br>        ,<br>        <span class="hljs-string">&#x27;APP_DIRS&#x27;</span>: <span class="hljs-literal">True</span>,<br>        <span class="hljs-string">&#x27;OPTIONS&#x27;</span>: &#123;<br>            <span class="hljs-string">&#x27;context_processors&#x27;</span>: [<br>                <span class="hljs-string">&#x27;django.template.context_processors.debug&#x27;</span>,<br>                <span class="hljs-string">&#x27;django.template.context_processors.request&#x27;</span>,<br>                <span class="hljs-string">&#x27;django.contrib.auth.context_processors.auth&#x27;</span>,<br>                <span class="hljs-string">&#x27;django.contrib.messages.context_processors.messages&#x27;</span>,<br>            ],<br>        &#125;,<br>    &#125;,<br>]<br></code></pre></td></tr></table></figure>
+
+
+## 模板变量：
+1.模板中使用变量要在html文件中，把变量放在`{{ 变量 }}`中
+
+2.变量内容放在render的`context`参数中，以`字典形式{'变量名': 变量值}`
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Person</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, username</span>):<br>        self.username = username<br>        <br><span class="hljs-keyword">def</span> <span class="hljs-title function_">index</span>(<span class="hljs-params">request</span>):<br><br>    <span class="hljs-comment"># 字符串型：</span><br>    <span class="hljs-comment"># content = &#123;</span><br>    <span class="hljs-comment">#     &#x27;person&#x27;: &#x27;鲁班大师&#x27;</span><br>    <span class="hljs-comment"># &#125;</span><br><br>    <span class="hljs-comment"># 类属性型：</span><br>    <span class="hljs-comment"># p = Person(&#x27;wxh&#x27;)</span><br>    <span class="hljs-comment"># content = &#123;</span><br>    <span class="hljs-comment">#     &#x27;person&#x27;: p</span><br>    <span class="hljs-comment"># &#125;</span><br><br>    <span class="hljs-comment"># 列表型：</span><br>    <span class="hljs-comment"># content = &#123;</span><br>    <span class="hljs-comment">#     &#x27;person&#x27;: [</span><br>    <span class="hljs-comment">#         &#x27;鲁班一号&#x27;,</span><br>    <span class="hljs-comment">#         &#x27;程咬金&#x27;,</span><br>    <span class="hljs-comment">#         &#x27;李白&#x27;,</span><br>    <span class="hljs-comment">#         &#x27;刘禅&#x27;</span><br>    <span class="hljs-comment">#     ]</span><br>    <span class="hljs-comment"># &#125;</span><br><br>    <span class="hljs-comment"># 字典型：</span><br>    content = &#123;<br>        <span class="hljs-string">&#x27;person&#x27;</span>: &#123;<br>            <span class="hljs-string">&#x27;user&#x27;</span>: <span class="hljs-string">&#x27;wxh&#x27;</span>,<br>            <span class="hljs-string">&#x27;admin&#x27;</span>: <span class="hljs-string">&#x27;wxhnb&#x27;</span><br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> render(request, <span class="hljs-string">&#x27;index.html&#x27;</span>, context=content)<br></code></pre></td></tr></table></figure>
+
+3.四种变量访问方式：
+- 类属性：`变量名.属性名` 
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">&#123;&#123; person.uername &#125;&#125;<br></code></pre></td></tr></table></figure>
+- 列表/元组：`变量名.下标`
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">&#123;&#123; person<span class="hljs-number">.1</span> &#125;&#125;<br></code></pre></td></tr></table></figure>
+- 字典：`变量名.key名`
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">&#123;&#123; person.admin &#125;&#125; <br></code></pre></td></tr></table></figure>
+- 字符串：`变量名`
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">&#123;&#123; person &#125;&#125;<br></code></pre></td></tr></table></figure>
+
+4.注意：在变量类型是字典时，尽量不要使用`keys,values,items`等字典的方法来做key名，不然访问时会出现`{{ person.items }}`等会出现歧义
+
+## 模板标签：
+#### if语句标签：
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python">&#123;% <span class="hljs-keyword">if</span> age &gt;= <span class="hljs-number">18</span> <span class="hljs-keyword">and</span> age &lt;= <span class="hljs-number">100</span>%&#125;<br>    &lt;p&gt;你是成年人了，请进&lt;/p&gt;<br>&#123;% <span class="hljs-keyword">elif</span> age &gt; <span class="hljs-number">100</span> %&#125;<br>    &lt;p&gt;神仙给爷爬&lt;/p&gt;<br>&#123;% <span class="hljs-keyword">else</span> %&#125;<br>    &lt;p&gt;未成年人滚蛋&lt;/p&gt;<br>&#123;% endif %&#125;<br></code></pre></td></tr></table></figure>
+
+1.所有标签都是在`{% 语句内容 %}`之间
+
+2.if标签是闭合标签，就是要有结束标记`{% endif %}`
+
+3.if标签内语法跟python中基本类似
+
+#### for标签：
+`for...in...`类似python中的for...in...语句，可以遍历列表、元组、字符串、字典等可迭代对象。
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">&lt;ul&gt;<br>    &#123;% <span class="hljs-keyword">for</span> book <span class="hljs-keyword">in</span> books %&#125;<br>        &lt;li&gt;&#123;&#123; book &#125;&#125;&lt;/li&gt;<br>    &#123;% endfor %&#125;<br>&lt;/ul&gt;<br></code></pre></td></tr></table></figure>
+
+如果想要反向遍历，在for..in..标签后加`reversed`
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">&lt;ul&gt;<br>    &#123;% <span class="hljs-keyword">for</span> book <span class="hljs-keyword">in</span> books <span class="hljs-built_in">reversed</span> %&#125;<br>        &lt;li&gt;&#123;&#123; book &#125;&#125;&lt;/li&gt;<br>    &#123;% endfor %&#125;<br>&lt;/ul&gt;<br></code></pre></td></tr></table></figure>
+
+`for..in..empty`：这个标签跟for..in...一样，只不过如果遍历的对象没有元素（即为空）时，会执行`empty`中的内容。
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python">&lt;ul&gt;<br>    &#123;% <span class="hljs-keyword">for</span> e <span class="hljs-keyword">in</span> empty %&#125;<br>        &lt;li&gt;e&lt;/li&gt;<br>    &#123;% empty %&#125;<br>        &lt;li&gt;暂时没有评论&lt;/li&gt;<br>    &#123;% endfor %&#125;<br>&lt;/ul&gt;<br></code></pre></td></tr></table></figure>
+
+遍历字典时，使用`items`,`keys`,`values`等方法
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">&#123;% <span class="hljs-keyword">for</span> key,value <span class="hljs-keyword">in</span> goods.items %&#125;<br>    &lt;li&gt;&#123;&#123; key &#125;&#125;&lt;/li&gt;<br>    &lt;li&gt;&#123;&#123; value &#125;&#125;&lt;/li&gt;<br>&#123;% endfor %&#125;<br></code></pre></td></tr></table></figure>
+
+在遍历时，`DLT`提供了一些变量：
+- `forloop.counter`：当前循环的下标，从1开始
+- `forloop.counter0`：当前循环的下标，从0开始
+- `forloop.recounter`：当前循环的反向下标值，比如列表有5个元素，第一次遍历得到的值就是5。
+- `forloop.first`：是否是第一次遍历
+- `forloop.last`：是否是最后一次遍历
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs python">&lt;tbody&gt;<br>    &#123;% <span class="hljs-keyword">for</span> person <span class="hljs-keyword">in</span> persons %&#125;<br>        &#123;% <span class="hljs-keyword">if</span> forloop.first %&#125;<br>            &lt;tr style=<span class="hljs-string">&quot;background: pink&quot;</span>&gt;<br>        &#123;% <span class="hljs-keyword">elif</span> forloop.last %&#125;<br>            &lt;tr style=<span class="hljs-string">&quot;background: aqua&quot;</span>&gt;<br>        &#123;% <span class="hljs-keyword">else</span> %&#125;<br>            &lt;tr&gt;<br>        &#123;% endif %&#125;<br>            &lt;td&gt;&#123;&#123; forloop.counter &#125;&#125;&lt;/td&gt;<br>            &lt;td&gt;&#123;&#123; person.name &#125;&#125;&lt;/td&gt;<br>            &lt;td&gt;&#123;&#123; person.age &#125;&#125;&lt;/td&gt;<br>            &lt;td&gt;&#123;&#123; person.height &#125;&#125;&lt;/td&gt;<br>        &lt;/tr&gt;<br>    &#123;% endfor %&#125;<br>&lt;/tbody&gt;<br></code></pre></td></tr></table></figure>
+**注：模板中的for..in..没有`continue`和`break`语句**
+
+
+#### with标签：
+1.用来定义便于调用
+
+2.有两种使用方式
+- with xxx=xxx
+- with xx as xx
+
+3.定义变量仅在with标签内有效
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python">&#123;% <span class="hljs-keyword">with</span> zs=person<span class="hljs-number">.0</span> %&#125; <br>    &lt;p&gt;&#123;&#123; zs &#125;&#125;&lt;/p&gt;<br>    &lt;p&gt;&#123;&#123; zs &#125;&#125;&lt;/p&gt;<br>    &lt;p&gt;&#123;&#123; zs &#125;&#125;&lt;/p&gt;<br>&#123;% endwith %&#125;<br><br>    &lt;p&gt;&#123;&#123; zs &#125;&#125;&lt;/p&gt;  <span class="hljs-comment"># 超出with语句，无效</span><br>    <br>&#123;% <span class="hljs-keyword">with</span> person<span class="hljs-number">.1</span> <span class="hljs-keyword">as</span> ls %&#125;<br>    &lt;p&gt;&#123;&#123; ls &#125;&#125;&lt;/p&gt;<br>    &lt;p&gt;&#123;&#123; ls &#125;&#125;&lt;/p&gt;<br>&#123;% endwith %&#125;<br></code></pre></td></tr></table></figure>
+
+#### url标签：
+`<a href="{% url 'url名称' [url参数 url参数] %}">`
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-comment"># path部分，定义名字</span><br>path(<span class="hljs-string">&#x27;book/&#x27;</span>, views.books, <span class="hljs-attribute">name</span>=<span class="hljs-string">&#x27;book&#x27;</span>)<br><span class="hljs-comment"># url标签部分</span><br>&lt;a <span class="hljs-attribute">href</span>=<span class="hljs-string">&quot;&#123;% url &#x27;book&#x27; %&#125;&quot;</span>&gt;读书&lt;/a&gt;<br></code></pre></td></tr></table></figure>
+带参数url：
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-comment"># path部分</span><br>path(<span class="hljs-string">&#x27;book/detail/&lt;book_id&gt;/&lt;category&gt;/&#x27;</span>, views.book_detail, <span class="hljs-attribute">name</span>=<span class="hljs-string">&#x27;detail&#x27;</span>)<br><br><span class="hljs-comment"># url标签部分</span><br>&lt;a <span class="hljs-attribute">href</span>=<span class="hljs-string">&quot;&#123;% url &#x27;detail&#x27; book_id=1 category=&#x27;好书&#x27; %&#125;&quot;</span>&gt;图书id&lt;/a&gt;<br></code></pre></td></tr></table></figure>
+
+查询字符串url（拼接）：
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-comment"># path部分</span><br>path(<span class="hljs-string">&#x27;login/&#x27;</span>, views.login, <span class="hljs-attribute">name</span>=<span class="hljs-string">&#x27;login&#x27;</span>)<br><span class="hljs-comment"># url标签部分</span><br>&lt;a <span class="hljs-attribute">href</span>=<span class="hljs-string">&quot;&#123;% url &#x27;login&#x27; %&#125;?next=/&quot;</span>&gt;登陆&lt;/a&gt;<br></code></pre></td></tr></table></figure>
+
+#### autoscape自动转义标签：
+1.DTL中默认已经开启了自动转义，会将特殊字符进行转义，如`<`转义为`&lt`等。
+
+2.如果变量是确实可信任的，可以使用`autoscape`标签关掉自动转义。
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python">content = &#123;<br>    <span class="hljs-string">&#x27;info&#x27;</span>: <span class="hljs-string">&#x27;&lt;a href=&quot;#&quot;&gt;百度&lt;/a&gt;&#x27;</span><br>&#125;<br><br>&#123;%  autoescape off %&#125;<br>    &#123;&#123; info &#125;&#125;<br>&#123;% endautoescape %&#125;<br><span class="hljs-comment"># 转义后结果一个百度超链接</span><br><span class="hljs-comment"># 与&lt;a href=&quot;#&quot;&gt;百度&lt;/a&gt;等价</span><br><br><span class="hljs-comment"># 若不关闭自动转义，即直接使用&#123;&#123; info &#125;&#125;，会输出&lt;a href=&quot;#&quot;&gt;百度&lt;/a&gt;而不是可点击的超链接</span><br></code></pre></td></tr></table></figure>
+
+#### spaceless标签：
+作用：去掉作用域内的代码空白
+<figure class="highlight django"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs django"><span class="hljs-template-tag">&#123;% <span class="hljs-name"><span class="hljs-name">spaceless</span></span> %&#125;</span><span class="language-xml"></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;#&quot;</span>&gt;</span>谷歌<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="language-xml"></span><span class="hljs-template-tag">&#123;% <span class="hljs-name"><span class="hljs-name">endspaceless</span></span> %&#125;</span><span class="language-xml"></span><br><span class="language-xml"></span><br><span class="language-xml"># 等价与<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;#&quot;</span>&gt;</span>谷歌<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br></code></pre></td></tr></table></figure>
+
+#### verbatim标签：
+作用：去除DTL对作用域内代码的解析，如{{ xxx }}会被解析为变量
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python">content = &#123;<br>    <span class="hljs-string">&#x27;info&#x27;</span>: <span class="hljs-string">&#x27;hello&#x27;</span><br>&#125;<br><span class="hljs-comment"># 输出为&#123;&#123; info &#125;&#125;，防止被解析成变量</span><br>&#123;% verbatim %&#125;<br>    &#123;&#123; info &#125;&#125;<br>&#123;% endverbatim %&#125;<br><br><span class="hljs-comment"># 不使用verbatim标签的话会输出hello</span><br></code></pre></td></tr></table></figure>
+
+## 过滤器：
+#### add过滤器：
+    {{ value|add:arg }}
+如果两个参数都是：
+- 整形或者是数字字符串，进行数值运算
+- 字符串型，进行拼接
+- 列表，进行组合
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 源码</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">add</span>(<span class="hljs-params">value, arg</span>):<br>    <span class="hljs-string">&quot;&quot;&quot;Add the arg to the value.&quot;&quot;&quot;</span><br>    <span class="hljs-keyword">try</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">int</span>(value) + <span class="hljs-built_in">int</span>(arg)<br>    <span class="hljs-keyword">except</span> (ValueError, TypeError):<br>        <span class="hljs-keyword">try</span>:<br>            <span class="hljs-keyword">return</span> value + arg<br>        <span class="hljs-keyword">except</span> Exception:<br>            <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;&#x27;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight twig"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs twig"><span class="language-xml">content = &#123;</span><br><span class="language-xml">    &#x27;value1&#x27;: [1, 2, 3],</span><br><span class="language-xml">    &#x27;value2&#x27;: [7, 8, 8],</span><br><span class="language-xml">    &#x27;str1&#x27;: &#x27;abc&#x27;,</span><br><span class="language-xml">    &#x27;str2&#x27;: &#x27;jkl&#x27;,</span><br><span class="language-xml">    &#x27;int_str1&#x27;: &#x27;1&#x27;,</span><br><span class="language-xml">    &#x27;int_str2&#x27;: &#x27;2&#x27;,</span><br><span class="language-xml">    &#x27;int1&#x27;: 100,</span><br><span class="language-xml">    &#x27;int2&#x27;: 200</span><br><span class="language-xml">&#125;</span><br><span class="language-xml"></span><br><span class="language-xml"></span><span class="hljs-template-variable">&#123;&#123; value<span class="hljs-number">1</span><span class="hljs-punctuation">|</span>add:value<span class="hljs-number">2</span> &#125;&#125;</span><span class="language-xml"> --&gt; [1, 2, 3, 7, 8, 8]</span><br><span class="language-xml"></span><span class="hljs-template-variable">&#123;&#123; str<span class="hljs-number">1</span><span class="hljs-punctuation">|</span>add:str<span class="hljs-number">2</span> &#125;&#125;</span><span class="language-xml"> --&gt; abcjkl</span><br><span class="language-xml"></span><span class="hljs-template-variable">&#123;&#123; int_str<span class="hljs-number">1</span><span class="hljs-punctuation">|</span>add:int_str<span class="hljs-number">2</span> &#125;&#125;</span><span class="language-xml"> --&gt; 3</span><br><span class="language-xml"></span><span class="hljs-template-variable">&#123;&#123; int<span class="hljs-number">1</span><span class="hljs-punctuation">|</span>add:int<span class="hljs-number">2</span> &#125;&#125;</span><span class="language-xml"> --&gt; 300</span><br></code></pre></td></tr></table></figure>
+
+#### cut过滤器：
+    {{ value|cut:arg }}
+移除所有value中arg所指定的字符串。类似python中的`replace(str,'')`
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"> content = &#123;<br>        <span class="hljs-string">&#x27;word&#x27;</span>: <span class="hljs-string">&#x27;hello world&#x27;</span><br>    &#125;<br>    <br>&#123;&#123; word|cut:<span class="hljs-string">&#x27;he&#x27;</span> &#125;&#125;<br><span class="hljs-comment"># 输出为 llo world</span><br><br></code></pre></td></tr></table></figure>
+    
+#### data过滤器：
+    {{ value|date:arg }}
+    value传入日期，arg传入格式化方法代码
+将日期按照指定格式格式化为字符串。
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python">content = &#123;<br>    <span class="hljs-string">&#x27;time&#x27;</span>: datetime.now()<br>&#125;<br><br>&#123;&#123; time|date:<span class="hljs-string">&#x27;Y/m/d h:i:s&#x27;</span> &#125;&#125; --&gt;当前时间输出为 年/月/日 时:分:秒格式<br>&#123;&#123; time|date:<span class="hljs-string">&#x27;d-n-Y H:i:s&#x27;</span> &#125;&#125; --&gt;当前时间输出为 日-月-年 时:分:秒格式<br></code></pre></td></tr></table></figure>
+
+常用格式字符 | 描述 | 示例      
+---|---|---
+Y | 四位年份 | 2019
+m | 两位数字的月份 | 01-12
+n | 月份，1-9前没有0 | 1-12
+d | 两位数字的天 | x-09
+j | 天，1-9前面没有0 | x-9
+g | 小时，12小时格式，1-9前没有0 | 9:xx:xx
+G | 小时，24小时格式，1-9前没有0 | 21:xx:xx
+h | 小时，12小时格式，1-9前有0 | 09:xx:xx
+H | 小时，24小时格式，1-9前有0 | 21:xx:xx
+i | 分钟，1-9前有0 | xx:01:xx
+s | 秒，1-9前有0 | xx:xx:05
+
+#### default过滤器：
+
+    {{ value|default:arg}}
+将`False`值，比如`[]`,`''`,`None`,`{}`等在if判断中判定为False的值，都会使用False过滤器提供的默认值。
+
+    {{ value|default:arg }}
+    用arg值替换为False的value值，不为False则不处理，返回原value值。
+    
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python">context = &#123;<br>    <span class="hljs-string">&#x27;value1&#x27;</span>: <span class="hljs-string">&#x27;&#x27;</span>,<br>    <span class="hljs-string">&#x27;value2&#x27;</span>: [],<br>    <span class="hljs-string">&#x27;value3&#x27;</span>: &#123;&#125;,<br>    <span class="hljs-string">&#x27;value4&#x27;</span>: <span class="hljs-literal">None</span><br>    &#125;<br>&#123;&#123; value1|default:<span class="hljs-string">&#x27;我是&quot;&quot;默认值&#x27;</span> &#125;&#125;<br>&#123;&#123; value2|default:<span class="hljs-string">&#x27;我是[]]默认值&#x27;</span> &#125;&#125;<br>&#123;&#123; value3|default:<span class="hljs-string">&#x27;我是&#123;&#125;默认值&#x27;</span> &#125;&#125;<br>&#123;&#123; value4|default:<span class="hljs-string">&#x27;我是None默认值&#x27;</span> &#125;&#125;<br></code></pre></td></tr></table></figure>
+
+#### default_if_none过滤器：
+
+    {{ value|default_if_none:arg }}
+功能同default，不过只有在值为none时才过滤，其他false值不过滤。
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python">context = &#123;<br>    <span class="hljs-string">&#x27;value1&#x27;</span>: <span class="hljs-string">&#x27;&#x27;</span>,<br>    <span class="hljs-string">&#x27;value2&#x27;</span>: [],<br>    <span class="hljs-string">&#x27;value3&#x27;</span>: &#123;&#125;,<br>    <span class="hljs-string">&#x27;value4&#x27;</span>: <span class="hljs-literal">None</span><br>    &#125;<br>&#123;&#123; value2|default_if_none:<span class="hljs-string">&#x27;我是[]默认值&#x27;</span> &#125;&#125;  <span class="hljs-comment"># 输出为 []，不会过滤</span><br>&#123;&#123; value4|default_if_none:<span class="hljs-string">&#x27;我是None默认值&#x27;</span> &#125;&#125; <span class="hljs-comment"># 输出为 我是None默认值</span><br></code></pre></td></tr></table></figure>
+
+#### first，last过滤器：
+
+    {{ value|first }}
+    {{ value|last }}
+取出列表中第一/最后一个元素。
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"> context = &#123;<br>        <span class="hljs-string">&#x27;value&#x27;</span>: [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]<br>    &#125;<br>&#123;&#123; value|first &#125;&#125; <span class="hljs-comment"># 1</span><br>&#123;&#123; value|last &#125;&#125; <span class="hljs-comment"># 3</span><br></code></pre></td></tr></table></figure>
+
+#### floatformat过滤器：
+
+    {{ value\|floatformat[:arg] }}
+四舍五入的方式格式化浮点型数据。如果没有传参数，会默认保留1位小数，若小数后面全为0，则只保留整数。可以传递参数来标识具体保留几位小数。
+
+1. 没传参数：
+
+value | 模板代码 | 输出
+---|---|---
+34.23234 | {{ value\|floatformat }} | 34.2
+34.0000 | {{ value\|floatformat }} | 34
+34.260 | {{ value\|floatformat }} | 34.3
+
+2. 传参数;
+
+value | 模板代码 | 输出
+---|---|---
+34.23234 | {{ value\|floatformat:3 }} | 34.232
+34.00000 | {{ value\|floatformat:3 }} | 34.000
+34.26000 | {{ value\|floatformat:3 }} | 34.260
+
+#### join过滤器：
+
+    {{ value|join:arg }}
+相当于python中的join方法，用一个字符串当连接符，连接一个列表。
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python">context = &#123;<br>    <span class="hljs-string">&#x27;value&#x27;</span>: [<span class="hljs-string">&#x27;w&#x27;</span>, <span class="hljs-string">&#x27;a&#x27;</span>, <span class="hljs-string">&#x27;z&#x27;</span>, <span class="hljs-string">&#x27;d&#x27;</span>]<br>&#125;<br><br>&#123;&#123; value|join:<span class="hljs-string">&#x27;==&#x27;</span> &#125;&#125;<br><br><span class="hljs-comment"># 输出为 w==a==z==d</span><br></code></pre></td></tr></table></figure>
+
+#### lower upper过滤器：
+
+    {{ value|lower }}
+    {{ value|upper }}
+大小写转换
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python">context = &#123;<br>    <span class="hljs-string">&#x27;value_low&#x27;</span>: <span class="hljs-string">&#x27;hello&#x27;</span>,<br>    <span class="hljs-string">&#x27;value_up&#x27;</span>: <span class="hljs-string">&#x27;HELLO&#x27;</span>,<br>&#125;<br>&#123;&#123; value_up|lower &#125;&#125; <span class="hljs-comment"># --&gt; hello</span><br>&#123;&#123; value_low|upper &#125;&#125; <span class="hljs-comment"># --&gt; HELLO</span><br></code></pre></td></tr></table></figure>
+
+#### random过滤器：
+    
+    {{ value|random }}
+作用相当于python中的random.choice，从可迭代对象中随机取出一个值。
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">context = &#123;<br>    <span class="hljs-string">&#x27;value&#x27;</span>: <span class="hljs-built_in">list</span>(<span class="hljs-built_in">range</span>(<span class="hljs-number">32</span>))<br>&#125;<br><br>&#123;&#123; value|random &#125;&#125;<br></code></pre></td></tr></table></figure>
+
+#### safe过滤器：
+
+    {{ value|safe }}
+相当于autoscape自动转义标签，防止value值被转义
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">context = &#123;<br>    <span class="hljs-string">&#x27;value&#x27;</span>: <span class="hljs-string">&#x27;&lt;div style=&quot;background: aqua&quot;&gt;safe成功&lt;/div&gt;&#x27;</span><br>&#125;<br><br>&#123;&#123; value|safe &#125;&#125;<br></code></pre></td></tr></table></figure>
+
+#### slice过滤器：
+
+    {{ value|slice:arg }}
+切片操作,arg参数写法同列表切片操作
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python">context = &#123;<br>    <span class="hljs-string">&#x27;value&#x27;</span>: <span class="hljs-built_in">list</span>(<span class="hljs-built_in">range</span>(<span class="hljs-number">32</span>))<br>&#125;<br><br>&#123;&#123; value|<span class="hljs-built_in">slice</span>:<span class="hljs-string">&#x27;10:&#x27;</span> &#125;&#125;<br>&#123;&#123; value|<span class="hljs-built_in">slice</span>:<span class="hljs-string">&#x27;:15&#x27;</span> &#125;&#125;<br>&#123;&#123; value|<span class="hljs-built_in">slice</span>:<span class="hljs-string">&#x27;3:10&#x27;</span> &#125;&#125;<br>&#123;&#123; value|<span class="hljs-built_in">slice</span>:<span class="hljs-string">&#x27;:10:2&#x27;</span> &#125;&#125; <span class="hljs-comment"># 取步长</span><br></code></pre></td></tr></table></figure>
+#### striptags过滤器;
+    
+    {{ value|striptags }}
+去除value中的html标签
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">context = &#123;<br>    <span class="hljs-string">&#x27;value&#x27;</span>: <span class="hljs-string">&#x27;&lt;p&gt;是我dio哒&lt;/p&gt;&#x27;</span><br>&#125;<br>&#123;&#123; value &#125;&#125; <span class="hljs-comment"># --&gt;&lt;p&gt;是我dio哒&lt;/p&gt;</span><br>&#123;&#123; value|striptags &#125;&#125; <span class="hljs-comment"># --&gt;是我dio哒</span><br></code></pre></td></tr></table></figure>
+
+#### truncatechars过滤器：
+    
+    {{ value|truncatechars:arg }}
+如果给定的value字符串超过了所给定的长度，会进行切割，并拼接上`...`.
+- 如果字符串长度小于给定的arg，不会进行操作
+- 给定的arg包含了`...`的长度，所以若保留两个字符，应给定arg=5
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python">context = &#123;<br>    <span class="hljs-string">&#x27;value&#x27;</span>: <span class="hljs-string">&#x27;北京欢迎你~&#x27;</span>,<br>    <span class="hljs-string">&#x27;value1&#x27;</span>: <span class="hljs-string">&#x27;&lt;p&gt;北京欢迎你~&lt;/p&gt;&#x27;</span><br>&#125;<br><br>&#123;&#123; value|truncatechars:<span class="hljs-number">5</span> &#125;&#125; <span class="hljs-comment"># --&gt;北京...</span><br><br></code></pre></td></tr></table></figure>
+
+#### truncatechars_html过滤器：
+    
+    {{ value1|truncatechars_html:arg }}
+作用同truncatechars，不过在切割时会保留html标签。
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python">context = &#123;<br>    <span class="hljs-string">&#x27;value&#x27;</span>: <span class="hljs-string">&#x27;北京欢迎你~&#x27;</span>,<br>    <span class="hljs-string">&#x27;value1&#x27;</span>: <span class="hljs-string">&#x27;&lt;p&gt;北京欢迎你~&lt;/p&gt;&#x27;</span><br>&#125;<br><br>&#123;&#123; value1|truncatechars:<span class="hljs-number">5</span> &#125;&#125; <span class="hljs-comment"># &lt;p...</span><br>&#123;&#123; value1|truncatechars_html:<span class="hljs-number">5</span> &#125;&#125; <span class="hljs-comment"># &lt;p&gt;北京...&lt;/p&gt;</span><br></code></pre></td></tr></table></figure>
+
+## 自定义过滤器：
+1. 在app下创建一个python包，叫`templatetags`。注意，必须叫这个名字，不然django找不到。
+2. 在这个包下面创建一个py文件，用来存储过滤器。
+3. 在新建的py文件中，定义过滤器（也就是函数）。函数第一个参数是被过滤的值也就是value，第二个参数是arg，可有可无。最多两个参数。
+4. 写完过滤器后，要注册过滤器。
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> django <span class="hljs-keyword">import</span> template<br><br>register = template.Library()<br><br>register.<span class="hljs-built_in">filter</span>(name, filter_func)<br></code></pre></td></tr></table></figure>
+5. 把这个过滤器所在的app添加到`settings.py`文件中的`INSTALLED_APP`中，不然找不到过滤器。
+6. 在html模板中使用load标签加载过滤器所在的py文件。
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">&#123;% load py文件名 %&#125;<br></code></pre></td></tr></table></figure>
+
+示例代码：
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># my_filter.py文件中的代码</span><br><br><span class="hljs-keyword">from</span> django <span class="hljs-keyword">import</span> template<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">greet</span>(<span class="hljs-params">value, word</span>):<br>    <span class="hljs-keyword">return</span> value + word<br><br><br><span class="hljs-comment"># 创建一个注册对象</span><br>register = template.Library()<br><span class="hljs-comment"># 使用对象注册自定义的过滤器</span><br>register.<span class="hljs-built_in">filter</span>(<span class="hljs-string">&#x27;greet&#x27;</span>, greet)  <span class="hljs-comment"># 第一个参数写调用时的名称，第二个参数是过滤器对应的函数</span><br><br><span class="hljs-comment"># 或者使用装饰器注册，会直接用函数名当成调用名注册</span><br><span class="hljs-comment"># register = template.Library()</span><br><span class="hljs-comment"># @register.filter</span><br><span class="hljs-comment"># def greet(value, word):</span><br><span class="hljs-comment">#     return value + word</span><br><br><span class="hljs-comment"># 若想自定义调用名，可在装饰器传参</span><br><span class="hljs-comment"># @register.filter(&#x27;my_greet&#x27;)</span><br><span class="hljs-comment"># def greet(value, word):</span><br><span class="hljs-comment">#     return value + word</span><br><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight django"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs django"><span class="language-xml"><span class="hljs-comment">&lt;!-- html模板文件的代码--&gt;</span></span><br><span class="language-xml"></span><br><span class="language-xml"></span><span class="hljs-template-tag">&#123;% <span class="hljs-name"><span class="hljs-name">load</span></span> my_filter %&#125;</span><span class="language-xml">  <span class="hljs-comment">&lt;!-- 这句话用来加载自定义的过滤器文件--&gt;</span></span><br><span class="language-xml"><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">html</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">&quot;en&quot;</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>Title<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span></span><br><span class="language-xml">    </span><span class="hljs-template-variable">&#123;&#123; value|greet:<span class="hljs-string">&#x27;还钱&#x27;</span> &#125;&#125;</span><span class="language-xml">  <span class="hljs-comment">&lt;!-- 调用自定义的过滤器--&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span></span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 过滤器使用</span><br>context = &#123;<br>    <span class="hljs-string">&#x27;value&#x27;</span>: <span class="hljs-string">&#x27;张三&#x27;</span><br>&#125;<br>&#123;&#123; value|greet:<span class="hljs-string">&#x27;还钱&#x27;</span> &#125;&#125; <span class="hljs-comment"># --&gt; 张三还钱</span><br></code></pre></td></tr></table></figure>
+
+
+## 模板结构优化：
+#### include标签:
+提高模板代码复用性。有些模板的代码是重复的，可以单独抽取出来，以后哪里用到使用`include`导入进来。
+
+如果想在`include`子模板时传递一些参数，可以使用`with xxx=xxx`的形式。
+<figure class="highlight django"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs django"><span class="language-xml"># include的代码</span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">header</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;</span></span></span><span class="hljs-template-tag">&#123;% <span class="hljs-name"><span class="hljs-name">url</span></span> &#x27;index&#x27; %&#125;</span><span class="language-xml"><span class="hljs-tag"><span class="hljs-string">&quot;</span>&gt;</span>首页<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;</span></span></span><span class="hljs-template-tag">&#123;% <span class="hljs-name"><span class="hljs-name">url</span></span> &#x27;school&#x27; %&#125;</span><span class="language-xml"><span class="hljs-tag"><span class="hljs-string">&quot;</span>&gt;</span>学校<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;</span></span></span><span class="hljs-template-tag">&#123;% <span class="hljs-name"><span class="hljs-name">url</span></span> &#x27;company&#x27; %&#125;</span><span class="language-xml"><span class="hljs-tag"><span class="hljs-string">&quot;</span>&gt;</span>公司<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span></span><span class="hljs-template-variable">&#123;&#123; username &#125;&#125;</span><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>     </span><span class="hljs-comment">&#123;#  带参数  #&#125;</span><span class="language-xml"></span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">header</span>&gt;</span></span><br><span class="language-xml"></span><br><span class="language-xml"> </span><span class="hljs-template-tag">&#123;% <span class="hljs-name"><span class="hljs-name">include</span></span> &#x27;header.html&#x27; with username=&#x27;wxh&#x27; %&#125;</span><br></code></pre></td></tr></table></figure>
+
+#### 继承：
+
+子模板可以继承父模板的html代码，如果子模板需要有自己的代码，通过block接口实现。
+
+<figure class="highlight django"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs django"><span class="language-xml"><span class="hljs-comment">&lt;!--父模板代码base.html--&gt;</span></span><br><span class="language-xml"></span><br><span class="language-xml"><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">html</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">&quot;en&quot;</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>Title<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;</span></span></span><span class="hljs-template-tag">&#123;% <span class="hljs-name"><span class="hljs-name">url</span></span> &#x27;index&#x27; %&#125;</span><span class="language-xml"><span class="hljs-tag"><span class="hljs-string">&quot;</span>&gt;</span>首页<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;</span></span></span><span class="hljs-template-tag">&#123;% <span class="hljs-name"><span class="hljs-name">url</span></span> &#x27;school&#x27; %&#125;</span><span class="language-xml"><span class="hljs-tag"><span class="hljs-string">&quot;</span>&gt;</span>学校<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-comment">&lt;!--block用来给子模板提供自定义代码接口--&gt;</span></span><br><span class="language-xml">    </span><span class="hljs-template-tag">&#123;% <span class="hljs-name"><span class="hljs-name">block</span></span> content %&#125;</span><span class="language-xml">  <span class="hljs-comment">&lt;!--content是定义block名，调用时要有名字--&gt;</span></span><br><span class="language-xml">        <span class="hljs-comment">&lt;!--父模板block内的文字子模板如果需要调用要是用</span></span><span class="hljs-template-variable">&#123;&#123; block.super &#125;&#125;</span><span class="language-xml"><span class="hljs-comment">变量调用--&gt;</span></span><br><span class="language-xml">        这是父模板的文字</span><br><span class="language-xml">    </span><span class="hljs-template-tag">&#123;% <span class="hljs-name"><span class="hljs-name">endblock</span></span> %&#125;</span><span class="language-xml"></span><br><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span></span><br></code></pre></td></tr></table></figure>
+
+
+<figure class="highlight django"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs django"><span class="language-xml"><span class="hljs-comment">&lt;!--子模板调用代码--&gt;</span></span><br><span class="language-xml"></span><br><span class="language-xml"></span><span class="hljs-template-tag">&#123;% <span class="hljs-name"><span class="hljs-name">extends</span></span> &#x27;base.html&#x27; %&#125;</span><span class="language-xml">  <span class="hljs-comment">&lt;!--这句话表示该模板继承自哪个模板，要写在代码开头--&gt;</span></span><br><span class="language-xml"></span><br><span class="language-xml"></span><span class="hljs-template-tag">&#123;% <span class="hljs-name"><span class="hljs-name">block</span></span> content %&#125;</span><span class="language-xml"></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>这是子模板的文字<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="language-xml">    </span><span class="hljs-template-variable">&#123;&#123; block.super &#125;&#125;</span><span class="language-xml">  <span class="hljs-comment">&lt;!--调用父模板block中的文字--&gt;</span></span><br><span class="language-xml"></span><span class="hljs-template-tag">&#123;% <span class="hljs-name"><span class="hljs-name">endblock</span></span> %&#125;</span><span class="language-xml"></span><br><span class="language-xml"></span><br><span class="language-xml"><span class="hljs-comment">&lt;!--外面的代码不会输出，无效代码--&gt;</span></span><br><span class="language-xml">这是block外面的代码</span><br><span class="language-xml"></span><br></code></pre></td></tr></table></figure>
+
+## 加载静态文件：
+
+    使用static标签
+    
+1. 确保`INSTALLED_APP`中添加了`django.contrib.staticfiles`这条。（默认添加）
+2. 确保在settings.py中设置了`STATIC_URL`。（默认设置已经为`STATIC_URL = '/static/'`即可）
+3. 创建文件夹存储静态文件。
+- 在app下创建static文件夹以存储app所使用的静态文件。为了防止app间的静态文件存在同名不能分辨的现象，推荐在app下的static文件夹下新建一个与app同名的文件夹，将静态文件放入其中。这样调用时路径就为`app_name/xxx.jpg`同名文件不会冲突。
+- 一些静态文件与app不挂钩。可以在settings.py文件中添加`STATICFILES_DIRS`属性，以后DTL就会在这个属性所指向的路径下查找静态文件。
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 这里路径设置为项目根路径下的static文件夹</span><br>STATICFILES_DIRS = [<br>    os.path.join(BASE_DIR, <span class="hljs-string">&#x27;static&#x27;</span>)<br>]<br></code></pre></td></tr></table></figure>
+
+5. 在模板中使用`load`标签加载static标签。因为static不是DTL的内置标签，若要想省去这步，可在settings.py文件的TEMPLATES下的OPTIONS下添加属性。
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs python">TEMPLATES = [<br>    &#123;<br>        <span class="hljs-string">&#x27;BACKEND&#x27;</span>: <span class="hljs-string">&#x27;django.template.backends.django.DjangoTemplates&#x27;</span>,<br>        <span class="hljs-string">&#x27;DIRS&#x27;</span>: [os.path.join(BASE_DIR, <span class="hljs-string">&#x27;templates&#x27;</span>)]<br>        ,<br>        <span class="hljs-string">&#x27;APP_DIRS&#x27;</span>: <span class="hljs-literal">True</span>,<br>        <span class="hljs-string">&#x27;OPTIONS&#x27;</span>: &#123;<br>            <span class="hljs-string">&#x27;context_processors&#x27;</span>: [<br>                <span class="hljs-string">&#x27;django.template.context_processors.debug&#x27;</span>,<br>                <span class="hljs-string">&#x27;django.template.context_processors.request&#x27;</span>,<br>                <span class="hljs-string">&#x27;django.contrib.auth.context_processors.auth&#x27;</span>,<br>                <span class="hljs-string">&#x27;django.contrib.messages.context_processors.messages&#x27;</span>,<br>            ],<br>            <span class="hljs-comment">####添加这条</span><br>            <span class="hljs-string">&#x27;builtins&#x27;</span>: [<span class="hljs-string">&#x27;django.templatetags.static&#x27;</span>],  <span class="hljs-comment"># 添加这句话来使static成为内置标签</span><br>            <span class="hljs-comment">####添加这条</span><br>        &#125;,<br>    &#125;,<br>]<br></code></pre></td></tr></table></figure>
+6. 使用`static`标签导入静态文件。
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">&lt;img src=<span class="hljs-string">&quot;&#123;% static &#x27;front/gologo.jpeg&#x27;%&#125;&quot;</span> alt=<span class="hljs-string">&quot;&quot;</span>&gt; <span class="hljs-comment"># 导入图片</span><br>&lt;link rel=<span class="hljs-string">&quot;stylesheet&quot;</span> href=<span class="hljs-string">&quot;&#123;% static &#x27;index.css&#x27; %&#125;&quot;</span>&gt; <span class="hljs-comment"># 导入css样式</span><br></code></pre></td></tr></table></figure>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%B7%A5%E5%85%B7/" class="category-chain-item">工具</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/python/">#python</a>
+      
+        <a href="/tags/Django/">#Django</a>
+      
+        <a href="/tags/%E5%90%8E%E7%AB%AF/">#后端</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>【Django】 03.Template</div>
+      <div>http://blog.rainna.xyz/2020/11/22/2020-11-22-03.Template/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>rainnalv</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2020年11月22日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/11/22/2020-11-22-05_%E5%85%B3%E6%9C%BA%E9%87%8D%E5%90%AF%E5%91%BD%E4%BB%A4/" title="【Linux命令】 05_关机重启命令">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">【Linux命令】 05_关机重启命令</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/11/22/2020-11-22-00.Django_env/" title="【Django】 00.虚拟环境">
+                        <span class="hidden-mobile">【Django】 00.虚拟环境</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

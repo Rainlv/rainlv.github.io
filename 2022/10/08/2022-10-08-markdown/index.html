@@ -1,0 +1,884 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/favicons/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="rainnalv">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="表格 要添加表，请使用三个或多个连字符（—）创建每列的标题，并使用管道（|）分隔每列。您可以选择在表的任一端添加管道。 1234| Syntax      | Description || ----------- | ----------- || Header      | Title       || Paragraph   | Text        | 对齐 您可以通过在标题行中的连字符的左">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【markdown】markdown基本语法">
+<meta property="og:url" content="http://blog.rainna.xyz/2022/10/08/2022-10-08-markdown/index.html">
+<meta property="og:site_name" content="RainnaLv&#39;Blog">
+<meta property="og:description" content="表格 要添加表，请使用三个或多个连字符（—）创建每列的标题，并使用管道（|）分隔每列。您可以选择在表的任一端添加管道。 1234| Syntax      | Description || ----------- | ----------- || Header      | Title       || Paragraph   | Text        | 对齐 您可以通过在标题行中的连字符的左">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-10-08T08:36:20.000Z">
+<meta property="article:modified_time" content="2023-04-13T16:42:21.024Z">
+<meta property="article:author" content="rainnalv">
+<meta property="article:tag" content="markdown">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>【markdown】markdown基本语法 - RainnaLv&#39;Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blog.rainna.xyz","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>RainnaLv&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="【markdown】markdown基本语法"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-10-08 16:36" pubdate>
+          2022年10月8日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          30 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">【markdown】markdown基本语法</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="表格">表格</h2>
+<p>要添加表，请使用三个或多个连字符（—）创建每列的标题，并使用管道（|）分隔每列。您可以选择在表的任一端添加管道。</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs markdown">| Syntax      | Description |<br>| ----------- | ----------- |<br>| Header      | Title       |<br>| Paragraph   | Text        |<br></code></pre></td></tr></table></figure>
+<p><strong>对齐</strong></p>
+<p>您可以通过在标题行中的连字符的左侧，右侧或两侧添加冒号（:），将列中的文本对齐到左侧，右侧或中心。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Syntax</th>
+<th style="text-align:center">Description</th>
+<th style="text-align:right">Test Text</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Header</td>
+<td style="text-align:center">Title</td>
+<td style="text-align:right">Here’s this</td>
+</tr>
+<tr>
+<td style="text-align:left">Paragraph</td>
+<td style="text-align:center">Text</td>
+<td style="text-align:right">And more</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs markdown">| Syntax      | Description | Test Text     |<br>| :---        |    :----:   |          ---: |<br>| Header      | Title       | Here&#x27;s this   |<br>| Paragraph   | Text        | And more      |<br></code></pre></td></tr></table></figure>
+<h2 id="超链接">超链接</h2>
+<p>链接文本放在中括号内，链接地址放在后面的括号中，链接title可选。</p>
+<p>超链接Markdown语法代码：<br><code>[超链接显示名](超链接地址 &quot;超链接title&quot;)</code></p>
+<p>这是一个链接 <a target="_blank" rel="noopener" href="https://markdown.com.cn">Markdown语法</a>。</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs markdown">这是一个链接 [<span class="hljs-string">Markdown语法</span>](<span class="hljs-link">https://markdown.com.cn</span>)。<br></code></pre></td></tr></table></figure>
+<h4 id="添加title">添加title</h4>
+<blockquote>
+<p>链接title是当鼠标悬停在链接上时会出现的文字</p>
+</blockquote>
+<p>这是一个链接 <a target="_blank" rel="noopener" href="https://markdown.com.cn" title="Markdown 语法教程">Markdown语法</a>。</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs markdown">这是一个链接 [<span class="hljs-string">Markdown语法</span>](<span class="hljs-link">https://markdown.com.cn &quot;Markdown 语法教程&quot;</span>)。<br></code></pre></td></tr></table></figure>
+<h4 id="网址和Email地址">网址和Email地址</h4>
+<p>使用尖括号可以很方便地把URL或者email地址变成可点击的链接。<br></p>
+<p><a target="_blank" rel="noopener" href="https://markdown.com.cn">https://markdown.com.cn</a> <br><br>
+<a href="mailto:fake@example.com">fake@example.com</a></p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs markdown"><span class="language-xml">&lt;https://markdown.com.cn&gt;</span> <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span></span><br><span class="language-xml">&lt;fake@example.com&gt;</span><br></code></pre></td></tr></table></figure>
+<h4 id="带格式化的链接">带格式化的链接</h4>
+<p>强调 链接, 在链接语法前后增加星号。 要将链接表示为代码，请在方括号中添加反引号。</p>
+<p>I love supporting the <strong><a target="_blank" rel="noopener" href="https://eff.org">EFF</a></strong>. <br><br>
+This is the <em><a target="_blank" rel="noopener" href="https://www.markdownguide.org">Markdown Guide</a></em>. <br><br>
+See the section on <a target="_blank" rel="noopener" href="https://markdown.com.cn/basic-syntax/links.html"><code>code</code></a>.</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs markdown">I love supporting the <span class="hljs-strong">**[<span class="hljs-string">EFF</span>](<span class="hljs-link">https://eff.org</span>)**</span>. <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span></span><br>This is the <span class="hljs-emphasis">*[<span class="hljs-string">Markdown Guide</span>](<span class="hljs-link">https://www.markdownguide.org</span>)*</span>. <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span></span><br>See the section on [<span class="hljs-string">`code`</span>](<span class="hljs-link">#code</span>).<br></code></pre></td></tr></table></figure>
+<h4 id="引用类型链接">引用类型链接</h4>
+<p>引用样式链接是一种特殊的链接，它使URL在Markdown中更易于显示和阅读。参考样式链接分为两部分：与文本保持内联的部分以及存储在文件中其他位置的部分，以使文本易于阅读。<br><br></p>
+<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Hobbit#Lifestyle">hobbit-hole</a> <br><br>
+[hobbit-hole] <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Hobbit#Lifestyle" title="Hobbit lifestyles">2</a></p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs markdown">[<span class="hljs-string">hobbit-hole</span>][<span class="hljs-symbol">1</span>] <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span></span><br>[hobbit-hole] [2]<br><br>[<span class="hljs-symbol">1</span>]: <span class="hljs-link">https://en.wikipedia.org/wiki/Hobbit#Lifestyle</span><br>[<span class="hljs-symbol">2</span>]: <span class="hljs-link">https://en.wikipedia.org/wiki/Hobbit#Lifestyle &#x27;Hobbit lifestyles&#x27;</span><br></code></pre></td></tr></table></figure>
+<h2 id="代码">代码</h2>
+<p>要将单词或短语表示为代码，请将其包裹在反引号 (`) 中。</p>
+<p>At the command prompt, type <code>nano</code>.</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs markdown">At the command prompt, type <span class="hljs-code">`nano`</span>.	<br></code></pre></td></tr></table></figure>
+<h4 id="转义反引号">转义反引号</h4>
+<p>如果你要表示为代码的单词或短语中包含一个或多个反引号，则可以通过将单词或短语包裹在双反引号(``)中.</p>
+<p><code>Use `code` in your Markdown file.</code></p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs markdown"><span class="hljs-code">``Use `</span>code<span class="hljs-code">` in your Markdown file.`</span>`<br></code></pre></td></tr></table></figure>
+<h4 id="代码块">代码块</h4>
+<p>要创建代码块，请将代码块的每一行缩进至少四个空格或一个制表符。</p>
+<pre><code class="hljs">&lt;html&gt;
+  &lt;head&gt;
+  &lt;/head&gt;
+&lt;/html&gt;
+</code></pre>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs markdown"><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span></span><br>  <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span></span><br>  <span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span></span><br></code></pre></td></tr></table></figure>
+<h4 id="围栏式代码块">围栏式代码块</h4>
+<p>在代码块之前和之后的行上使用三个反引号（(```）或三个波浪号（~~~）,要添加语法突出显示，请在受防护的代码块之前的反引号旁边指定一种语言.</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;firstName&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;John&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;lastName&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Smith&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;age&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">25</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+<h2 id="定义列表">定义列表</h2>
+<p>要创建定义列表，请在第一行上键入术语。在下一行，键入一个冒号，后跟一个空格和定义。</p>
+<dl>
+<dt>First Term</dt>
+<dd>This is the definition of the first term.</dd>
+<dt>Second Term</dt>
+<dd>This is one definition of the second term.</dd>
+<dd>This is another definition of the second term.</dd>
+</dl>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs markdown">First Term<br>: This is the definition of the first term.<br><br>Second Term<br>: This is one definition of the second term.<br>: This is another definition of the second term.<br></code></pre></td></tr></table></figure>
+<h2 id="分割线">分割线</h2>
+<blockquote>
+<p>要创建分隔线，请在单独一行上使用三个或多个星号 (***)、破折号 (—) 或下划线 (___) ，并且不能包含其他内容</p>
+<p>为了兼容性，请在分隔线的前后均添加空白行。</p>
+</blockquote>
+<p>Try to put a blank line before…</p>
+<hr>
+<hr>
+<hr>
+<p>…and after a horizontal rule.</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs markdown">Try to put a blank line before...<br><br>---<br><br><span class="hljs-strong">***</span><br><span class="hljs-strong"></span><br><span class="hljs-strong">___</span><br><span class="hljs-strong"></span><br><span class="hljs-strong">...and after a horizontal rule.</span><br></code></pre></td></tr></table></figure>
+<h2 id="脚注">脚注</h2>
+<blockquote>
+<p>要创建脚注参考，请在方括号（&lt;sup id=“fnref:1” class=“footnote-ref”&gt;<a href="#fn:1" rel="footnote"><span class="hint--top hint--rounded" aria-label="This is the first footnote."><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Hobbit#Lifestyle">1</a></span></a></sup>）内添加插入符号和标识符。标识符可以是数字或单词，但不能包含空格或制表符。标识符仅将脚注参考与脚注本身相关联-在输出中，脚注按顺序编号。</p>
+<p>在括号内使用另一个插入符号和数字添加脚注，并用冒号和文本（\</p>
+</blockquote>
+<p>Here’s a simple footnote,<sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote"><span class="hint--top hint--rounded" aria-label="This is the first footnote."><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Hobbit#Lifestyle">1</a></span></a></sup> and here’s a longer one.<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup></p>
+<h2 id="列表">列表</h2>
+<blockquote>
+<p>要创建<em><strong>有序列表</strong></em>，请在每个列表项前添加数字并紧跟一个英文句点。数字不必按数学顺序排列，但是列表应当以数字 1 起始。</p>
+</blockquote>
+<ol>
+<li class="lvl-3">
+<p>First item</p>
+</li>
+<li class="lvl-3">
+<p>Second item</p>
+</li>
+<li class="lvl-3">
+<p>Third item</p>
+</li>
+<li class="lvl-3">
+<p>Fourth item</p>
+</li>
+<li class="lvl-3">
+<p>First item</p>
+</li>
+<li class="lvl-3">
+<p>Second item</p>
+</li>
+<li class="lvl-3">
+<p>Third item</p>
+</li>
+<li class="lvl-3">
+<p>Fourth item</p>
+</li>
+</ol>
+<blockquote>
+<p>要创建<em><strong>无序列表</strong></em>，请在每个列表项前面添加破折号 (-)、星号 (*) 或加号 (+) 。缩进一个或多个列表项可创建嵌套列表。</p>
+</blockquote>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>First item</p>
+</li>
+<li class="lvl-2">
+<p>Second item</p>
+</li>
+<li class="lvl-2">
+<p>Third item</p>
+</li>
+<li class="lvl-2">
+<p>Fourth item</p>
+</li>
+</ul>
+<blockquote>
+<p><em><strong>在列表中嵌套其他元素</strong></em>,要在保留列表连续性的同时在列表中添加另一种元素，请将该元素缩进四个空格或一个制表符</p>
+</blockquote>
+<h5 id="段落">段落</h5>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>This is the first list item.</p>
+</li>
+<li class="lvl-2">
+<p>Here’s the second list item.</p>
+<p>I need to add another paragraph below the second list item.</p>
+</li>
+<li class="lvl-2">
+<p>And here’s the third list item.</p>
+</li>
+</ul>
+<h5 id="引用">引用</h5>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>This is the first list item.</p>
+</li>
+<li class="lvl-2">
+<p>Here’s the second list item.</p>
+<blockquote>
+<p>A blockquote would look great below the second list item.</p>
+</blockquote>
+</li>
+<li class="lvl-2">
+<p>And here’s the third list item.</p>
+</li>
+</ul>
+<h5 id="代码块-2">代码块</h5>
+<blockquote>
+<p>代码块通常采用四个空格或一个制表符缩进。当它们被放在列表中时，请将它们缩进八个空格或两个制表符。</p>
+</blockquote>
+<ol>
+<li class="lvl-3">
+<p>Open the file.</p>
+</li>
+<li class="lvl-3">
+<p>Find the following code block on line 21:</p>
+<pre><code class="hljs">&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Test&lt;/title&gt;
+  &lt;/head&gt;
+</code></pre>
+</li>
+<li class="lvl-3">
+<p>Update the title to match the name of your website.<section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span>My footnote.）。您不必在文档末尾添加脚注。您可以将它们放在除列表，块引号和表之类的其他元素之外的任何位置。<br>
+<a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:1" class="footnote-text"><span>This is the first footnote.<br>
+<a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section></p>
+</li>
+</ol>
+<hr class="footnotes-sep">
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p>Here’s one with multiple paragraphs and code.</p>
+<p>Indent paragraphs to include them in the footnote.</p>
+<p><code>&#123; my code &#125;</code></p>
+<p>Add as many paragraphs as you like. <a href="#fnref1" class="footnote-backref">↩︎</a></p>
+</li>
+</ol>
+</section>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%A1%86%E6%9E%B6/" class="category-chain-item">框架</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/markdown/">#markdown</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>【markdown】markdown基本语法</div>
+      <div>http://blog.rainna.xyz/2022/10/08/2022-10-08-markdown/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>rainnalv</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年10月8日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/04/30/ESXI%E5%B9%B3%E5%8F%B0Ubuntu%E6%98%BE%E5%8D%A1%E7%9B%B4%E9%80%9A/" title="ESXI平台Ubuntu显卡直通">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">ESXI平台Ubuntu显卡直通</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/10/08/2022-10-08-Flask/" title="Flask基础">
+                        <span class="hidden-mobile">Flask基础</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
