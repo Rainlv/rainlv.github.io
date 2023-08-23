@@ -1,7 +1,7 @@
 ---
 title: RIRS云平台用户手册
 date: 2023-08-21 20:02:45
-tags:
+categories: 文档
 ---
 
 > 版本：v1.1
