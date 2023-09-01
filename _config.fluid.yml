@@ -29,7 +29,7 @@ footer:
 index:
   slogan:
     enable: true
-    text: Nobody
+    text: 『está lloviendo en Macondo.』
 
 about:
   avatar: /img/avatar.jpeg
